@@ -1,8 +1,44 @@
 import requests
 from typing import Dict, Optional, List
+import aoj
 
 ENDPOINT = "https://judgeapi.u-aizu.ac.jp"
 
+################
+### Problems ###
+################
+
+def get_problems(page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
+    """
+    Get a list of all probelms. Pager is also available. When logged in, submissions status, recommendation status and bookmarks status will be included to the response.
+
+    Ref: findAllProblems http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fproblems%3Fpage%3D%7Bpage%7D%26size%3D%7Bsize%7D_GET
+    """
+    url = f"{ENDPOINT}/problems"
+    params = { "page": page, "size": size }
+    problems = requests.get(url, params = params).json()
+    return problems
+
+def get_problems_by_user_id(user_id: str, page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
+    """
+    Get a list of all probelms. Pager is also available. Submissions status, recommendation status and bookmarks status will be included to the response. (notice: This API returns the same response as /problems does in the case of logged in.)
+
+    Ref: findAllProblemsByUserId http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fproblems%2Fusers%2F%7BuserId%7D%3Fpage%3D%7Bpage%7D%26size%3D%7Bsize%7D_GET
+    """
+    url = f"{ENDPOINT}/problems/users/{user_id}"
+    params = { "page": page, "size": size }
+    problems = requests.get(url, params = params).json()
+    return problems
+
+def get_problems_by_course_id(course_id: str) -> List[Dict]:
+    """
+    Get a list of topic problems in a specified course name. When logged in, submissions status will be included in the response.
+
+    Ref: findByCourseIdProblems http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fproblems%2Fcourses%2F%7BcourseShortName%7D_GET
+    """
+    url = f"{ENDPOINT}/problems/courses/{course_id}"
+    problems = requests.get(url).json()["problems"]
+    return problems
 def get_submissions_by_problem_id(problem_id: str, page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
     """
     Get submission histories by specifying problem ID.
