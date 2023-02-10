@@ -39,6 +39,11 @@ def get_problems_by_course_id(course_id: str) -> List[Dict]:
     url = f"{ENDPOINT}/problems/courses/{course_id}"
     problems = requests.get(url).json()["problems"]
     return problems
+
+###################
+### Submissions ###
+###################
+
 def get_submissions_by_problem_id(problem_id: str, page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
     """
     Get submission histories by specifying problem ID.
@@ -172,3 +177,50 @@ def get_solutions_by_problem_id_and_language(problem_id: str, language: aoj.Lang
     params = { "page": page, "size": size }
     solutions = requests.get(url, params = params).json()
     return solutions
+
+#############
+### Users ###
+#############
+
+def get_users(page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
+    """
+    Get all users among several pages.
+
+    Ref: findAll http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fusers%3Fpage%3D%7Bpage%7D%26size%3D%7Bsize%7D_GET
+    """
+    url = f"{ENDPOINT}/users"
+    params = { "page": page, "size": size }
+    users = requests.get(url, params = params).json()
+    return users
+
+def get_user_by_user_id(user_id: str) -> Dict:
+    """
+    Get a user information by specifying user ID.
+
+    Ref: findById http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fusers%2F%7Buser_id%7D_GET
+    """
+    url = f"{ENDPOINT}/users/{user_id}"
+    user = requests.get(url).json()
+    return user
+
+def get_users_order_by_solved(page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
+    """
+    Get a ranking sorted by the number of solved problems.
+
+    Ref: findAllByOrderBySolved http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fusers%2Franking%2Fsolved%3Fpage%3D%7Bpage%7D%26size%3D%7Bsize%7D_GET
+    """
+    url = f"{ENDPOINT}/users/ranking/solved"
+    params = { "page": page, "size": size }
+    users = requests.get(url, params = params).json()
+    return users
+
+def get_users_order_by_rating(page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
+    """
+    Get a ranking sorted by ratings.
+
+    Ref: findAllByOrderByRating http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fusers%2Franking%2Frating%3Fpage%3D%7Bpage%7D%26size%3D%7Bsize%7D_GET
+    """
+    url = f"{ENDPOINT}/users/ranking/rating"
+    params = { "page": page, "size": size }
+    users = requests.get(url, params = params).json()
+    return users
