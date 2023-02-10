@@ -101,3 +101,74 @@ def get_submission_verdict(judge_id: int) -> Dict:
     url = f"{ENDPOINT}/verdicts/{judge_id}"
     submission = requests.get(url).json()
     return submission
+
+#################
+### Solutions ###
+#################
+
+def get_solutions(page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
+    """
+    Get all solution records. To get all of submission records please refer to APIs of submit&status category.
+
+    Ref: findAllSolutions http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fsolutions%3Fpage%3D%7Bpage%7D%26size%3D%7Bsize%7D_GET
+    """
+    url = f"{ENDPOINT}/solutions"
+    params = { "page": page, "size": size }
+    solutions = requests.get(url, params = params).json()
+    return solutions
+
+def get_solutions_by_user_id(user_id: str, page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
+    """
+    Get all solution records of the specified user.
+
+    Ref: findByUserIdSolutions http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fsolutions%2Fusers%2F%7Buser_id%7D%3Fpage%3D%7Bpage%7D%26size%3D%7Bsize%7D_GET
+    """
+    url = f"{ENDPOINT}/solutions/users/{user_id}"
+    params = { "page": page, "size": size }
+    solutions = requests.get(url, params = params).json()
+    return solutions
+
+def get_solutions_by_user_id_and_language(user_id: str, language: aoj.Language, page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
+    """
+    Get all solution records of the specified user in the specified programming language.
+
+    Ref: findByUserIdAndLanguageSolutions http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fsolutions%2Fusers%2F%7Buser_id%7D%2Flang%2F%7Blang%7D%3Fpage%3D%7Bpage%7D%26size%3D%7Bsize%7D_GET
+    """
+    url = f"{ENDPOINT}/solutions/users/{user_id}/lang/{language.value}"
+    params = { "page": page, "size": size }
+    solutions = requests.get(url, params = params).json()
+    return solutions
+
+def get_solutions_by_problem_id(problem_id: str, page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
+    """
+    Get all solution records. To get all of submission records please refer to APIs of submit&status category.
+
+    Ref: findByProblemIdSolutions http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fsolutions%2Fproblems%2F%7Bproblem_id%7D%3Fpage%3D%7Bpage%7D%26size%3D%7Bsize%7D_GET
+    """
+    url = f"{ENDPOINT}/solutions/problems/{problem_id}"
+    params = { "page": page, "size": size }
+    solutions = requests.get(url, params = params).json()
+    return solutions
+
+def get_solutions_by_user_id_and_problem_id(user_id: str, problem_id: str, page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
+    """
+    Get all solution records of the specified user and problem.
+
+    Ref: findByUserIdAndProblemIdSolutions http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fsolutions%2Fusers%2F%7Buser_id%7D%2Fproblems%2F%7Bproblem_id%7D_GET
+    """
+    # TODO: page and size is not supported?
+    url = f"{ENDPOINT}/solutions/users/{user_id}/problems/{problem_id}"
+    params = { "page": page, "size": size }
+    solutions = requests.get(url, params = params).json()
+    return solutions
+
+def get_solutions_by_problem_id_and_language(problem_id: str, language: aoj.Language, page: Optional[int] = None, size: Optional[int] = None) -> List[Dict]:
+    """
+    Get all solution records of the specified problem solved by the specified language.
+
+    Ref: findByProblemIdAndLanguageSolutions http://developers.u-aizu.ac.jp/api?key=judgeapi%2Fsolutions%2Fproblems%2F%7Bproblem_id%7D%2Flang%2F%7Blang%7D%3Fpage%3D%7Bpage%7D%26size%3D%7Bsize%7D_GET
+    """
+    url = f"{ENDPOINT}/solutions/problems/{problem_id}/lang/{language.value}"
+    params = { "page": page, "size": size }
+    solutions = requests.get(url, params = params).json()
+    return solutions
