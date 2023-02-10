@@ -1,5 +1,3 @@
-from aoj.aoj import *
-from aoj.base import *
 from enum import Enum
 
 class Language(Enum):
@@ -73,3 +71,6 @@ def get_short_status_str(status: int) -> str:
 		return "JR"
 	else:
 		raise ValueError
+
+from aoj.aoj import *
+from aoj.base import *
