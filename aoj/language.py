@@ -1,0 +1,25 @@
+from enum import Enum
+
+# Ref: https://onlinejudge.u-aizu.ac.jp/system_info
+class Language(Enum):
+    """Programming languages"""
+    C = "C"
+    CPP = "C++"
+    CPP11 = "C++11"
+    CPP14 = "C++14"
+    CPP17 = "C++17"
+    Java = "JAVA"
+    Scala = "Scala"
+    Haskell = "Haskell"
+    OCaml = "OCaml"
+    CSharp = "C#"
+    D = "D"
+    Ruby = "Ruby"
+    Python2 = "Python"
+    Python3 = "Python3"
+    PyPy3 = "PyPy3"
+    PHP = "PHP"
+    JavaScript = "JavaScript"
+    Rust = "Rust"
+    Go = "Go"
+    Kotlin = "Kotlin"
